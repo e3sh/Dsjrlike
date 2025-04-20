@@ -37,12 +37,14 @@ function gObjectEnemyV(scene, x, y){
     sprite.x = Phaser.Math.Between(1, 20)*32+16;
     sprite.y = 0//Phaser.Math.Between(1, 20)*32+16;
 
-    sprite.anims.play('kout_e',true);   
+    sprite.anims.play('left_v',true);   
     growcount = 0;
     sprite.setVelocityX(0);
     sprite.setVelocityY(0);
     sprite.setVisible(true);
     sprite.clearTint();
+
+
   }
 
   this.update = ()=>{
@@ -130,6 +132,7 @@ function gObjectVtail(scene, parent, grow){
   let BG = scene.maze.BG;
 
   let fifobuf;
+  this.active;
 
   this.create = ()=>{
     if (grow-- < 1) return;
@@ -163,27 +166,48 @@ function gObjectVtail(scene, parent, grow){
   this.create();
 
   const update = ()=>{
+    let nowactive = this.active && this.visible;
 
-    if (Boolean(fifobuf)){
-      //console.log(fifobuf);
-      let w = fifobuf.shift();
-      
-      scene.physics.moveTo(
-        sprite,
-        w.x,
-        w.y,
-        180//,
-        //maxtime
-      );
-      
-      //sprite.x = w.x;
-      //sprite.y = w.y;
+    this.active = parent.active || parent.visivle;//visible; 
 
-      w = {x: parent.x, y: parent.y};
-      fifobuf.push(w);
+    if (Boolean(sprite)) {
+      sprite.setVisible(parent.visible);
+      sprite.setActive(parent.visible);
+      if (this.active != nowactive) sprite.clearTint(); 
     }
-  };
 
+    if (!this.active) return;
+    if (Boolean(sprite)){ 
+
+      if ("deadstate" in sprite){
+        return;
+      }
+
+      if (Boolean(fifobuf)){
+        //console.log(fifobuf);
+        let w = fifobuf.shift();
+
+        if (Phaser.Math.Distance.Between(w.x, w.y, parent.x,parent.y ) > 16) {
+          //w.x = parent.x; w.y = parent.y;
+          //sprite.setVisible(false);//console.log(Phaser.Math.Distance.Between(w.x, w.y, parent.x,parent.y ) );
+        }
+
+        scene.physics.moveTo(
+          sprite,
+          w.x,
+          w.y,
+          180//,
+          //maxtime
+        );
+        
+        //sprite.x = w.x;
+        //sprite.y = w.y;
+
+        w = {x: parent.x, y: parent.y};
+        fifobuf.push(w);
+      }
+    };
+  }
   this.update = update;
 
 }

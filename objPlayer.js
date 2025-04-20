@@ -71,18 +71,22 @@ function gObjectPlayer(scene, x, y){
       mvmode.dur = inputc.duration.right;
     }
 
-    if (inputc.up){
+    if (false){
+    //if (inputc.up){
       mvmode.anim = 'up_p';
       mvmode.type = true;
       mvmode.vy =-1;
       mvmode.dur = inputc.duration.up;
     }
-    if (inputc.down){
+
+    if (false){
+    //if (inputc.down){
       mvmode.anim = 'down_p';
       mvmode.type = true;
       mvmode.vy =1;
       mvmode.dur = inputc.duration.down;
     }
+
 
     if ((inputc.left)||(inputc.right)||(inputc.up)||(inputc.down)){
       //before_pos.vx = mvmode.vx;

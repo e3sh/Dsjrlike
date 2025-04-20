@@ -105,7 +105,7 @@ class GameScene extends Phaser.Scene {
     this.seffect[9] = this.sound.add("powup");
   
       //camera setup
-    this.cameras.main.setViewport(80,100,640,400);
+    this.cameras.main.setViewport(200,100,400,400);
 
     this.zoom = 1.0
 
@@ -134,10 +134,29 @@ class GameScene extends Phaser.Scene {
       }
     }
 
+    const hiteff = (f, e)=>{
+      if (!('deadstate' in e)){
+        e.deadstate = true;
+        e.setVelocityY(-300);
+        e.setVelocityX(-e.body.velocity.x)
+        
+        this.timerOneShot = this.time.delayedCall(3000, ()=>{
+          e.setVisible(false);
+          if ('deadstate' in e) delete e.deadstate;
+        }, this
+        );
+        e.setTint("0x07e");
+        e.setActive(false);
+      }
+    }
+
     this.physics.add.collider(this.friends, this.layer);
     this.physics.add.collider(this.mobs, this.layer);
     this.physics.add.collider(this.friends, this.mobs, hitenemy, null, this );
     this.physics.add.collider(this.mobs, this.mobs); 
+    this.physics.add.overlap(this.friends, this.effcts, hiteff, null, this); 
+    this.physics.add.collider(this.effcts, this.layer);
+
   }
 
   create() {

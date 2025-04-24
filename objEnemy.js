@@ -34,6 +34,8 @@ function gObjectEnemy(scene, x, y){
     sprite.x = Phaser.Math.Between(1, 20)*32+16;
     sprite.y = 0//Phaser.Math.Between(1, 20)*32+16;
 
+    sprite.body.checkCollision.none = false;
+
     sprite.anims.play('kout_e',true);   
     growcount = 0;
     sprite.setVelocityX(0);

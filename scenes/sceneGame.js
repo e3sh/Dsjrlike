@@ -124,6 +124,8 @@ class GameScene extends Phaser.Scene {
         e.deadstate = true;
         e.setVelocityY(-300);
         e.setVelocityX(-e.body.velocity.x)
+
+        e.body.checkCollision.none = true;
         
         this.timerOneShot = this.time.delayedCall(1000, ()=>{
           e.setVisible(false);
@@ -139,6 +141,8 @@ class GameScene extends Phaser.Scene {
         e.deadstate = true;
         e.setVelocityY(-300);
         e.setVelocityX(-e.body.velocity.x)
+
+        e.body.checkCollision.none = true;
         
         this.timerOneShot = this.time.delayedCall(3000, ()=>{
           e.setVisible(false);

@@ -37,6 +37,8 @@ function gObjectEnemyV(scene, x, y){
     sprite.x = Phaser.Math.Between(1, 20)*32+16;
     sprite.y = 0//Phaser.Math.Between(1, 20)*32+16;
 
+    sprite.body.checkCollision.none = false;
+
     sprite.anims.play('left_v',true);   
     growcount = 0;
     sprite.setVelocityX(0);
@@ -168,7 +170,7 @@ function gObjectVtail(scene, parent, grow){
   const update = ()=>{
     let nowactive = this.active && this.visible;
 
-    this.active = parent.active || parent.visivle;//visible; 
+    this.active = parent.active || parent.visible;//visible; 
 
     if (Boolean(sprite)) {
       sprite.setVisible(parent.visible);
@@ -182,7 +184,8 @@ function gObjectVtail(scene, parent, grow){
       if ("deadstate" in sprite){
         return;
       }
-
+      sprite.body.checkCollision.none = false;
+      
       if (Boolean(fifobuf)){
         //console.log(fifobuf);
         let w = fifobuf.shift();
